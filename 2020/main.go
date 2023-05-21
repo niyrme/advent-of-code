@@ -22,6 +22,7 @@ func main() {
 	var runner Day
 	switch day {
 	case 1:
+		runner = Day01
 	case 2:
 	case 3:
 	case 4:
