@@ -1,0 +1,14 @@
+[flake8]
+ignore =
+	# Screens are big now
+	E501
+	E701
+	# I like tabs more
+	W191
+	W504
+exclude =
+	venv
+	__pycache__
+	.pytest_cache
+	.git
+	logs
