@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": ".",
+		},
+		{
+			"path": "2015",
+		},
+		{
+			"path": "2016",
+		},
+		{
+			"path": "2017",
+		},
+		{
+			"path": "2018",
+		},
+		{
+			"path": "2019",
+		},
+		{
+			"path": "2020",
+		},
+		{
+			"path": "2021",
+		},
+		{
+			"path": "2022",
+		},
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.DS_Store": true,
+			"**/.git": true,
+			"**/.hg": true,
+			"**/.svn": true,
+			"**/CVS": true,
+			"**/Thumbs.db": true,
+			"[0-9][0-9][0-9][0-9]/": true,
+		},
+	},
+}
