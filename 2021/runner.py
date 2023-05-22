@@ -7,61 +7,38 @@ import sys
 import pytest
 
 
+class Args:
+	day: int
+	runTests: bool
+
+
 def main() -> int:
-	print("WIP: broken")
-	return 1
 	parser = argparse.ArgumentParser()
-	parser.add_argument("day", type=int, help="day to run. must be in range 1-25, runs all if not given")
-	parser.add_argument("-p", "--part", type=int, help="specific part to run", choices=(1, 2), dest="part")
-	parser.add_argument("-T", "--skip-tests", action="store_true", help="skip tests", dest="skipTests")
-	parser.add_argument("-t", "--tests", action="store_true", help="only run tests (takes priority over -T)", dest="runTests")
-	args = parser.parse_args()
+	parser.add_argument("day", type=int)
+	parser.add_argument("-t", "--tests", action="store_true", dest="runTests")
+
+	args = Args()
+	parser.parse_args(namespace=args)
 
 	if not 0 < args.day < 26:
-		print(f"day must be in range 1-25, got {args.day}")
+		print(f"day must be in range 1-25, got {args.day}", file=sys.stderr)
 		return 1
 
-	dayStr = str(args.day).rjust(2, "0")
+	dayName = f"day-{args.day:>02}.py"
 
-	if dayStr not in os.listdir(os.path.dirname(__file__)):
-		print(f"Day {dayStr} not found", file=sys.stderr)
+	if dayName not in os.listdir(os.path.dirname(__file__)):
+		print(f"day {args.day} not found", file=sys.stderr)
 		return 1
 
-	if args.day == 25 and args.part == 2:
-		print("There is no part 2 on day 25", file=sys.stderr)
-		return 1
-
-	print(f"Running {dayStr}")
-
-	testArgs = [f"{dayStr}/main.py", "-q"]
-	if args.part is not None:
-		testArgs += ["-k", f"testPart{args.part}"]
-
-	if args.runTests is True or args.skipTests is False:
-		testRet = pytest.main(testArgs)
-		if testRet not in (pytest.ExitCode.OK, pytest.ExitCode.NO_TESTS_COLLECTED):
-			print(f"Day {dayStr} tests failed with exit code {int(testRet)}\n", file=sys.stderr)
+	if args.runTests is True:
+		if (testRet := pytest.main([dayName, "-q"])) not in (pytest.ExitCode.OK, pytest.ExitCode.NO_TESTS_COLLECTED):
+			print(f"day {args.day} tests failed with exit code {int(testRet)}", file=sys.stderr)
 			return int(testRet)
-
-		if args.runTests:
-			return 0
-
-	dayMain = __import__(dayStr, fromlist=("main",)).main
-
-	if args.part is not None:
-		if args.part == 1:
-			partFn = dayMain.part1
-		else:
-			partFn = dayMain.part2
-
-		with open(f"{dayStr}/input.txt", "r") as inp:
-			print(f"Part {args.part}: {partFn(inp.read())}")
-
-		return 0
 	else:
-		ret = dayMain.main()
-		print()
-		return ret
+		with open(dayName, "r") as script:
+			exec(script.read())
+
+	return 0
 
 
 if __name__ == "__main__":

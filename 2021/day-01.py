@@ -22,7 +22,7 @@ def part2(inp: str) -> int:
 
 
 def main() -> int:
-	inputPath = os.path.join("inputs", f"{__file__[-5:-3]:>02}.txt")
+	inputPath = os.path.join(os.path.dirname(__file__), "inputs", "01.txt")
 	with open(inputPath) as inpF:
 		inp = inpF.read().strip()
 		print(f"Part 1: {part1(inp)}")

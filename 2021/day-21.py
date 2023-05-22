@@ -86,7 +86,7 @@ def part2(inp: str) -> int:
 
 
 def main() -> int:
-	inputPath = os.path.join(os.path.dirname(__file__), "input.txt")
+	inputPath = os.path.join(os.path.dirname(__file__), "inputs", "21.txt")
 	with open(inputPath) as inpF:
 		inp = inpF.read().strip()
 		print(f"Part 1: {part1(inp)}")

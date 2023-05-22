@@ -50,7 +50,7 @@ def compute(inp: str, iterations: int) -> int:
 
 
 def main() -> int:
-	inputPath = os.path.join(os.path.dirname(__file__), "input.txt")
+	inputPath = os.path.join(os.path.dirname(__file__), "inputs", "20.txt")
 	with open(inputPath) as inpF:
 		inp = inpF.read().strip()
 		print(f"Part 1: {compute(inp, 2)}")
